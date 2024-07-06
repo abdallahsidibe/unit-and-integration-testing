@@ -4,6 +4,9 @@ import com.tech.domain.Employee;
 import com.tech.exception.EmployeeNotFoundException;
 import com.tech.service.IEmployeeService;
 import com.tech.utils.GlobalPath;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +25,11 @@ public class EmployeeController {
     @Autowired
     IEmployeeService employeeService;
 
+    @Operation(summary = "add an employee", operationId = "addEmployee", tags = {"Employee Management"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "501", description = "server error")
+    })
     @PostMapping(GlobalPath.EMPLOYEE_PATH)
     public ResponseEntity<Employee> addEmployee(@RequestBody Employee employee) {
         try {
@@ -33,6 +41,12 @@ public class EmployeeController {
         }
     }
 
+    @Operation(summary = "retrieve all employees", operationId = "getAllEmployees", tags = {"Employee Management"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "404", description = "Not Found"),
+            @ApiResponse(responseCode = "501", description = "server error")
+    })
     @GetMapping(GlobalPath.EMPLOYEE_PATH)
     public ResponseEntity<List<Employee>> getAllEmployees() {
 
@@ -44,6 +58,12 @@ public class EmployeeController {
         }
     }
 
+    @Operation(summary = "retrieve an employee", operationId = "getEmployeeById", tags = {"Employee Management"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "404", description = "Not Found"),
+            @ApiResponse(responseCode = "501", description = "Server Error")
+    })
     @GetMapping(GlobalPath.EMPLOYEE_BY_ID_PATH)
     public ResponseEntity<Employee> getEmployeeById(@PathVariable("employeeId") Long employeeId) {
 
@@ -55,6 +75,12 @@ public class EmployeeController {
         }
     }
 
+    @Operation(summary = "update an employee", operationId = "updateEmployee", tags = {"Employee Management"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "Bad Request"),
+            @ApiResponse(responseCode = "501", description = "Server Error")
+    })
     @PutMapping(GlobalPath.UPDATED_EMPLOYEE_PATH)
     public ResponseEntity<Employee> updateEmployee(@RequestBody Employee body, @PathVariable("employeeId") String employeeId) {
         try {
@@ -65,8 +91,14 @@ public class EmployeeController {
         }
     }
 
+    @Operation(summary = "delete an employee", operationId = "deleteEmployee", tags = {"Employee Management"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "404", description = "Not Found"),
+            @ApiResponse(responseCode = "501", description = "Server Error")
+    })
     @DeleteMapping(GlobalPath.EMPLOYEE_BY_ID_PATH)
-    public void deleteEmployee(@PathVariable("employeeId") Long employeeId ){
+    public void deleteEmployee(@PathVariable("employeeId") Long employeeId) {
         employeeService.deteleEmployeeById(employeeId);
     }
 }
