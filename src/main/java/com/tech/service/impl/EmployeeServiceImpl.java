@@ -22,6 +22,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
+
     /**
      * @param employee
      * @return saved employee
@@ -29,6 +30,14 @@ public class EmployeeServiceImpl implements IEmployeeService {
     @Override
     public Employee addEmployee(Employee employee) {
         logger.info("saving new employee");
+        Optional<Employee> savedEmployee = employeeRepository.findByEmail(employee.getEmail());
+        if (savedEmployee.isPresent()){
+            try {
+                throw new EmployeeNotFoundException("Employee already exist with given email:  "+ employee.getEmail());
+            } catch (EmployeeNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        }
         return employeeRepository.save(employee);
     }
 

@@ -86,6 +86,20 @@ public class EmployeeRepositoryTests {
         assertThat(employee1).isNotNull();
     }
 
+    @DisplayName("Junit test for find employee by email operation")
+    @Test
+    public void givenEmployeeObject_whenFindByEmail_returnEmployeeObject() {
+
+        // Given - precondition or setup
+        Employee savedEmployee = employeeRepository.save(employee);
+
+        // When - action or the behaviour we are going to test
+        Optional<Employee> employee1 = employeeRepository.findByEmail(savedEmployee.getEmail());
+
+        // Then - verify output
+        assertThat(employee1).isNotNull();
+    }
+
     @DisplayName("Junit test for update employee operation")
     @Test
     public void givenEmployeeObject_whenUpdateEmployee_returnUpdateEmployee() {

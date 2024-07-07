@@ -1,14 +1,18 @@
 package com.tech.domain;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Objects;
 
 @Data
 @Entity
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "employees")
 public class Employee  extends AbstractEntity{
 
@@ -23,21 +27,11 @@ public class Employee  extends AbstractEntity{
     @Column(name = "email", nullable = false)
     private String email;
 
-    public Employee(Long id, String firstName, String lastName, String email) {
-        super(id);
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-    }
 
-    public Employee(String firstName, String lastName, String email) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-    }
 
-    public Employee() {
-    }
+
+
+
 
     @Override
     public boolean equals(Object o) {
