@@ -7,14 +7,14 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IEmployeeService {
-    Employee addEmployee(Employee employee);
+    Employee addEmployee(Employee employee) throws EmployeeNotFoundException;
 
     Employee getEmployeeById(Long id) throws EmployeeNotFoundException;
 
     List<Employee> getAllEmployees();
 
-    Employee updateEmployee(Employee employee);
+    Employee updateEmployee(Employee employee, Long id);
 
-    void deteleEmployeeById(Long id);
+    void deleteEmployeeById(Long id);
 
 }

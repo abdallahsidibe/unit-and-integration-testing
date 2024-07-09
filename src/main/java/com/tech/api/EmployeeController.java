@@ -82,9 +82,9 @@ public class EmployeeController {
             @ApiResponse(responseCode = "501", description = "Server Error")
     })
     @PutMapping(GlobalPath.UPDATED_EMPLOYEE_PATH)
-    public ResponseEntity<Employee> updateEmployee(@RequestBody Employee body, @PathVariable("employeeId") String employeeId) {
+    public ResponseEntity<Employee> updateEmployee(@RequestBody Employee body, @PathVariable("employeeId") Long employeeId) {
         try {
-            Employee result = employeeService.updateEmployee(body);
+            Employee result = employeeService.updateEmployee(body, employeeId);
             return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -99,6 +99,6 @@ public class EmployeeController {
     })
     @DeleteMapping(GlobalPath.EMPLOYEE_BY_ID_PATH)
     public void deleteEmployee(@PathVariable("employeeId") Long employeeId) {
-        employeeService.deteleEmployeeById(employeeId);
+        employeeService.deleteEmployeeById(employeeId);
     }
 }

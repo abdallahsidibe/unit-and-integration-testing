@@ -28,14 +28,14 @@ public class EmployeeServiceImpl implements IEmployeeService {
      * @return saved employee
      */
     @Override
-    public Employee addEmployee(Employee employee) {
+    public Employee addEmployee(Employee employee) throws EmployeeNotFoundException {
         logger.info("saving new employee");
         Optional<Employee> savedEmployee = employeeRepository.findByEmail(employee.getEmail());
         if (savedEmployee.isPresent()){
             try {
                 throw new EmployeeNotFoundException("Employee already exist with given email:  "+ employee.getEmail());
             } catch (EmployeeNotFoundException e) {
-                throw new RuntimeException(e);
+                throw new EmployeeNotFoundException("Employee not exist with given email");
             }
         }
         return employeeRepository.save(employee);
@@ -64,10 +64,10 @@ public class EmployeeServiceImpl implements IEmployeeService {
      * @return updated Employee
      */
     @Override
-    public Employee updateEmployee(Employee body) {
+    public Employee updateEmployee(Employee body, Long id) {
 
 
-        Optional<Employee> employee = employeeRepository.findById(body.getId());
+        Optional<Employee> employee = employeeRepository.findById(id);
 
         Employee updatedEmployee = new Employee();
 
@@ -87,7 +87,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
      * @param id
      */
     @Override
-    public void deteleEmployeeById(Long id) {
+    public void deleteEmployeeById(Long id) {
         employeeRepository.deleteById(id);
     }
 }
